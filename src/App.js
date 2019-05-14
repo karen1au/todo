@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import './App.css';
 import NewTodo from './components/NewTodo.js';
 import TodoList from './components/TodoList';
+import NewCategory from './components/NewCategory';
+import Filter from './components/Filter'
 
 const todos_sample = [
   {
@@ -28,13 +30,14 @@ class App extends Component {
     this.state = {
       todos: todos_sample,
       categories : ["home","school"],
+      filter: "all",
+      filtered: todos_sample
     }
   }
 
   addTodo = newTodo => {
     let newList = this.state.todos;
     newList.push(newTodo);
-    console.log(newList)
     this.setState({todos: newList})
   }
 
@@ -50,19 +53,45 @@ class App extends Component {
     const index = this.state.todos.findIndex(item => item.id == id);
     this.state.todos.splice(index, 1, newTodo)
     this.setState({todos: this.state.todos})
+    console.log(this.state.todos)
   }
 
   completeTask = (event) => {
-    // console.log(event.target.name)
     const selected = this.state.todos.find(item => item.id == event.target.name);
     selected.completed = !selected.completed;
     this.setState({ todos: this.state.todos});
   }
+
+  addCategory = (newCategory) => {
+    let newList = this.state.categories
+    newList.push(newCategory.category)
+    console.log(newList)
+    this.setState({categories: newList})
+  }
+
+  selectFilter = (filter) => {
+    this.setState({filter}, () => this.getFiltered(filter))
+  }
+
+  getFiltered = (filter) => {
+    if (filter === "all") {
+      return this.setState({filtered: this.state.todos})
+    } else if (filter === "pending") {
+      return this.setState({filtered: this.state.todos.filter(todo => !todo.completed)})
+    } else if (filter === "completed") {
+      return this.setState({filtered: this.state.todos.filter(todo => todo.completed)})
+    }
+  }
+
+
+
   render() {
     return (
       <div className="App">
         <NewTodo addTodo={this.addTodo} categories={this.state.categories}/>
-        <TodoList todos={this.state.todos} 
+        <NewCategory addCategory={this.addCategory} />
+        <Filter selectFilter={this.selectFilter} />
+        <TodoList todos={this.state.filtered} 
           deleteTodo={this.deleteTodo} 
           categories={this.state.categories}
           completeTask={this.completeTask}

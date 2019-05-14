@@ -8,7 +8,7 @@ class TodoItem extends Component {
     super(props);
     this.state = {
       editing: false,
-      category: this.props.categories,
+      category: "",
       title: this.props.title,
       desc: this.props.desc,
       due: this.props.due,
@@ -25,6 +25,7 @@ class TodoItem extends Component {
   }
 
   handleChange = (event) => {
+    console.log(event.target.value)
     this.setState({
       [event.target.name]: event.target.value
     });
@@ -53,6 +54,7 @@ class TodoItem extends Component {
   }
 
   render() {
+
     return (
               <div>
               { (!this.state.editing) ? 
@@ -68,8 +70,9 @@ class TodoItem extends Component {
                   <input type="text" name="title" defaultValue={this.props.title} onChange={this.handleChange}/>
                   <input type="text" name="desc" defaultValue={this.props.desc} onChange={this.handleChange}/>
                   <select name="category" onChange={this.handleChange}>
+                    <option hidden disabled selected value> -- select a category -- </option>
                     {this.props.categories.map(cat => {
-                      return <option value={cat} >{cat}</option>
+                      return <option key={cat} value={cat} >{cat}</option>
                     })}
                   </select>
                   <DatePicker

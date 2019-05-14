@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import TodoItem from './TodoItem';
 
 class TodoList extends Component {
+  
   renderItems() {
     return this.props.todos.map( (todo, index) => 
     <TodoItem key={index} {...todo} 
