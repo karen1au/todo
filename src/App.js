@@ -30,8 +30,10 @@ class App extends Component {
     this.state = {
       todos: todos_sample,
       categories : ["home","school"],
+      catFilter: "",
       filter: "all",
-      filtered: todos_sample
+      filtered: todos_sample,
+      second_filter: todos_sample
     }
   }
 
@@ -73,6 +75,10 @@ class App extends Component {
     this.setState({filter}, () => this.getFiltered(filter))
   }
 
+  categoryFilter = (catFilter) => {
+    this.setState({catFilter}, () => this.getFiltered(catFilter))
+  }
+
   getFiltered = (filter) => {
     if (filter === "all") {
       return this.setState({filtered: this.state.todos})
@@ -81,6 +87,11 @@ class App extends Component {
     } else if (filter === "completed") {
       return this.setState({filtered: this.state.todos.filter(todo => todo.completed)})
     }
+      if (this.state.catFilter === "all") {
+        return;
+      } else if (this.state.catFilter) {
+        return this.setState({filtered: this.state.todos.filter(todo => todo.category === this.state.catFilter)})
+      }
   }
 
 
@@ -90,7 +101,9 @@ class App extends Component {
       <div className="App">
         <NewTodo addTodo={this.addTodo} categories={this.state.categories}/>
         <NewCategory addCategory={this.addCategory} />
-        <Filter selectFilter={this.selectFilter} />
+        <Filter selectFilter={this.selectFilter} 
+          categories={this.state.categories}
+          categoryFilter={this.categoryFilter}/>
         <TodoList todos={this.state.filtered} 
           deleteTodo={this.deleteTodo} 
           categories={this.state.categories}

@@ -48,7 +48,7 @@ class NewTodo extends Component {
           <input type="text" name="title" placeholder="i need to..." value={this.state.title} onChange={this.handleChange}/>
           <input type="text" name="desc" placeholder="details..." value={this.state.desc}  onChange={this.handleChange}/>
           <select name="category" onChange={this.handleChange}>
-            <option hidden disabled selected value> -- select a category -- </option>
+            <option hidden selected value> -- select a category -- </option>
             {this.props.categories.map(cat => {
               return <option key={cat} value={cat} >{cat}</option>
             })}

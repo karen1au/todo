@@ -8,7 +8,7 @@ class TodoItem extends Component {
     super(props);
     this.state = {
       editing: false,
-      category: "",
+      category: this.props.category,
       title: this.props.title,
       desc: this.props.desc,
       due: this.props.due,
