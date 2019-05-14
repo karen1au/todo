@@ -52,6 +52,12 @@ class App extends Component {
     this.setState({todos: this.state.todos})
   }
 
+  completeTask = (event) => {
+    // console.log(event.target.name)
+    const selected = this.state.todos.find(item => item.id == event.target.name);
+    selected.completed = !selected.completed;
+    this.setState({ todos: this.state.todos});
+  }
   render() {
     return (
       <div className="App">
@@ -59,6 +65,7 @@ class App extends Component {
         <TodoList todos={this.state.todos} 
           deleteTodo={this.deleteTodo} 
           categories={this.state.categories}
+          completeTask={this.completeTask}
           saveTodo={this.saveTodo}/>
       </div>
     );

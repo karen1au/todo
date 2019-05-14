@@ -7,7 +7,8 @@ class TodoList extends Component {
     <TodoItem key={index} {...todo} 
     deleteTodo={this.props.deleteTodo}
     categories={this.props.categories}
-    saveTodo={this.props.saveTodo}/>
+    saveTodo={this.props.saveTodo}
+    completeTask={this.props.completeTask}/>
     )
   }
 

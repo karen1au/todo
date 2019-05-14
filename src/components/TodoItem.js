@@ -8,10 +8,11 @@ class TodoItem extends Component {
     super(props);
     this.state = {
       editing: false,
-      category: "",
-      title: "",
-      desc: "",
+      category: this.props.categories,
+      title: this.props.title,
+      desc: this.props.desc,
       due: this.props.due,
+      completed: this.props.completed
     }
   }
 
@@ -56,7 +57,7 @@ class TodoItem extends Component {
               <div>
               { (!this.state.editing) ? 
                 <div key={this.props.id}>
-                  <h3>{this.props.title}</h3>
+                  <h3><a style={{color: this.props.completed? "green": "red"}} name={this.props.id} onClick={(e) => this.props.completeTask(e)}>{this.props.title}</a></h3>
                   <p>{this.props.desc}</p>
                   <p>{this.props.category}</p>
                   <p>due on: <Moment format="YYYY/MM/DD">{this.props.due}</Moment></p>
