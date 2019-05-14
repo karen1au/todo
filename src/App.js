@@ -3,7 +3,7 @@ import './App.css';
 import NewTodo from './components/NewTodo.js';
 import TodoList from './components/TodoList';
 
-const todos = [
+const todos_sample = [
   {
     id: 1,
     category: "home",
@@ -26,8 +26,9 @@ class App extends Component {
   constructor(props){
     super(props);
     this.state = {
-      todos: todos,
+      todos: todos_sample,
       categories : ["home","school"],
+      editing: false,
     }
   }
 
@@ -39,11 +40,24 @@ class App extends Component {
     this.setState({todos: newList})
   }
 
+  deleteTodo = id => {
+    event.preventDefault();
+    const index = this.state.todos.findIndex(item => item.id === id);
+    this.state.todos.splice(index, 1)
+    this.setState({todos: this.state.todos});
+
+  }
+
+  editTodo = id => {
+    event.preventDefault();
+    this.setState({editing: true})
+  }
+
   render() {
     return (
       <div className="App">
         <NewTodo addTodo={this.addTodo} categories={this.state.categories}/>
-        <TodoList todos={this.state.todos}/>
+        <TodoList todos={this.state.todos} deleteTodo={this.deleteTodo} editing={this.state.editing}/>
       </div>
     );
   }
