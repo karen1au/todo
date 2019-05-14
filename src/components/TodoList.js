@@ -3,7 +3,10 @@ import TodoItem from './TodoItem';
 
 class TodoList extends Component {
   renderItems() {
-    return this.props.todos.map( (todo, index) => <TodoItem key={index} {...todo} deleteTodo={this.props.deleteTodo}/>
+    return this.props.todos.map( (todo, index) => 
+    <TodoItem key={index} {...todo} 
+    deleteTodo={this.props.deleteTodo}
+    categories={this.props.categories}/>
     )
   }
 

@@ -28,7 +28,6 @@ class App extends Component {
     this.state = {
       todos: todos_sample,
       categories : ["home","school"],
-      editing: false,
     }
   }
 
@@ -48,16 +47,14 @@ class App extends Component {
 
   }
 
-  editTodo = id => {
-    event.preventDefault();
-    this.setState({editing: true})
-  }
-
   render() {
     return (
       <div className="App">
         <NewTodo addTodo={this.addTodo} categories={this.state.categories}/>
-        <TodoList todos={this.state.todos} deleteTodo={this.deleteTodo} editing={this.state.editing}/>
+        <TodoList todos={this.state.todos} 
+          deleteTodo={this.deleteTodo} 
+          editing={this.state.editing}
+          categories={this.state.categories}/>
       </div>
     );
   }
