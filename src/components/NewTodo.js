@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import DatePicker from "react-datepicker";
-import Moment from 'react-moment';
 import "react-datepicker/dist/react-datepicker.css";
 
 
@@ -27,13 +26,27 @@ class NewTodo extends Component {
     this.setState({due: date})
   }
 
+  handleSubmit = () => {
+    event.preventDefault();
+    if (this.state.title.trim()) {
+      this.props.addTodo(this.state);
+      this.setState({
+        category: "",
+        title: "",
+        desc: "",
+        due: new Date()})
+    } else {
+      return;
+    }
+  }
+
   render() {
     return (
       <div className="todo-form">
         <h2>To do list</h2>
-        <form className="todo-input" onSubmit={() => this.props.addTodo(this.state)}>
-          <input type="text" name="title" placeholder="i need to..." onChange={this.handleChange}/>
-          <input type="text" name="desc" placeholder="details..." onChange={this.handleChange}/>
+        <form className="todo-input" onSubmit={() => this.handleSubmit()}>
+          <input type="text" name="title" placeholder="i need to..." value={this.state.title} onChange={this.handleChange}/>
+          <input type="text" name="desc" placeholder="details..." value={this.state.desc}  onChange={this.handleChange}/>
           <select name="category" onChange={this.handleChange}>
             {this.props.categories.map(cat => {
               return <option value={cat} >{cat}</option>

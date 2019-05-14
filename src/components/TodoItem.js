@@ -8,11 +8,47 @@ class TodoItem extends Component {
     super(props);
     this.state = {
       editing: false,
+      category: "",
+      title: "",
+      desc: "",
+      due: this.props.due,
     }
   }
 
   editTodo = () => {
-  this.setState({editing: true})
+    this.setState({editing: true})
+  }
+
+  cancelEdit = () => {
+    this.setState({editing: false})
+  }
+
+  handleChange = (event) => {
+    this.setState({
+      [event.target.name]: event.target.value
+    });
+  }
+
+  handleDate = date => {
+    this.setState({due: date})
+  }
+
+  handleSubmit = (event) => {
+    event.preventDefault();
+    if (this.state.title.trim()) {
+      const edited = {
+        id: event.target.name,
+        category: this.state.category,
+        title: this.state.title,
+        desc: this.state.desc,
+        due: this.state.due,
+        completed: this.props.completed
+      }
+      this.props.saveTodo(event.target.name, edited)
+      this.setState({editing: false})
+    } else {
+      this.cancelEdit();
+    }
   }
 
   render() {
@@ -20,26 +56,27 @@ class TodoItem extends Component {
               <div>
               { (!this.state.editing) ? 
                 <div key={this.props.id}>
-                <h3>{this.props.title}</h3>
-                <p>{this.props.desc}</p>
-                <p>{this.props.category}</p>
-                <p>due on: <Moment format="YYYY/MM/DD">{this.props.due}</Moment></p>
-                <p><Moment diff={<Moment>{Date.now()}</Moment>} unit="days">{this.props.due}</Moment> days left</p>
-                <button onClick={() => this.editTodo()}>edit</button><button onClick={() => this.props.deleteTodo(this.props.id)}>delete</button>
-                 </div>
-              :  <form key={this.props.id}>
-                  <input type="text" name="title" value={this.props.title} onChange={this.handleChange}/>
-                  <input type="text" name="desc" value={this.props.desc} onChange={this.handleChange}/>
+                  <h3>{this.props.title}</h3>
+                  <p>{this.props.desc}</p>
+                  <p>{this.props.category}</p>
+                  <p>due on: <Moment format="YYYY/MM/DD">{this.props.due}</Moment></p>
+                  <p><Moment diff={<Moment>{Date.now()}</Moment>} unit="days">{this.props.due}</Moment> days left</p>
+                  <button onClick={() => this.editTodo()}>edit</button><button onClick={() => this.props.deleteTodo(this.props.id)}>delete</button>
+                </div>
+              : <form key={this.props.id} name={this.props.id} onSubmit={() => this.handleSubmit(event)}>
+                  <input type="text" name="title" defaultValue={this.props.title} onChange={this.handleChange}/>
+                  <input type="text" name="desc" defaultValue={this.props.desc} onChange={this.handleChange}/>
                   <select name="category" onChange={this.handleChange}>
                     {this.props.categories.map(cat => {
                       return <option value={cat} >{cat}</option>
                     })}
                   </select>
                   <DatePicker
-                    selected={this.props.due}
+                    selected={this.state.due}
                     onChange={this.handleDate}
                   />
                   <input type="submit" name="submit-form"/>
+                  <button onClick={this.cancelEdit}>cancel</button>
                 </form>
               } 
               </div>

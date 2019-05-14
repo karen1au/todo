@@ -9,7 +9,7 @@ const todos_sample = [
     category: "home",
     title: "buy milk",
     desc: "2% from walmart",
-    due: "2019-05-15",
+    due: new Date(2019, 4, 24, 10, 33, 30, 0),
     completed: false
   },
   {
@@ -17,7 +17,7 @@ const todos_sample = [
     category: "school",
     title: "finish homework",
     desc: "learning mobx",
-    due: "2019-05-19",
+    due: new Date(2019, 4, 22, 10, 33, 30, 0),
     completed: false
   }
 ]
@@ -32,7 +32,6 @@ class App extends Component {
   }
 
   addTodo = newTodo => {
-    event.preventDefault();
     let newList = this.state.todos;
     newList.push(newTodo);
     console.log(newList)
@@ -41,10 +40,16 @@ class App extends Component {
 
   deleteTodo = id => {
     event.preventDefault();
-    const index = this.state.todos.findIndex(item => item.id === id);
+    const index = this.state.todos.findIndex(item => item.id == id);
     this.state.todos.splice(index, 1)
     this.setState({todos: this.state.todos});
 
+  }
+
+  saveTodo = (id, newTodo) => {
+    const index = this.state.todos.findIndex(item => item.id == id);
+    this.state.todos.splice(index, 1, newTodo)
+    this.setState({todos: this.state.todos})
   }
 
   render() {
@@ -53,8 +58,8 @@ class App extends Component {
         <NewTodo addTodo={this.addTodo} categories={this.state.categories}/>
         <TodoList todos={this.state.todos} 
           deleteTodo={this.deleteTodo} 
-          editing={this.state.editing}
-          categories={this.state.categories}/>
+          categories={this.state.categories}
+          saveTodo={this.saveTodo}/>
       </div>
     );
   }

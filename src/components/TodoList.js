@@ -6,7 +6,8 @@ class TodoList extends Component {
     return this.props.todos.map( (todo, index) => 
     <TodoItem key={index} {...todo} 
     deleteTodo={this.props.deleteTodo}
-    categories={this.props.categories}/>
+    categories={this.props.categories}
+    saveTodo={this.props.saveTodo}/>
     )
   }
 
