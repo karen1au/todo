@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Form, Button, Input, Icon } from 'semantic-ui-react'
 
 
 class NewCategory extends Component {
@@ -28,10 +29,7 @@ class NewCategory extends Component {
   render() {
     return (
       <div className="category-form">
-        <form className="add-category" onSubmit={() => this.handleSubmit()}>
-          <input type="text" name="category" placeholder="new category" value={this.state.category} onChange={this.handleChange}/>
-          <input type="submit" value="add" name="submit-category"/>
-        </form>
+          <Input fluid icon={<Icon name='add' link onClick={()=> this.handleSubmit()}/>} placeholder='add new category' name="category" onChange={this.handleChange} value={this.state.category}/>
       </div>
     );
   }

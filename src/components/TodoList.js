@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import TodoItem from './TodoItem';
+import { Segment } from 'semantic-ui-react';
 
 class TodoList extends Component {
   
@@ -9,7 +10,8 @@ class TodoList extends Component {
     deleteTodo={this.props.deleteTodo}
     categories={this.props.categories}
     saveTodo={this.props.saveTodo}
-    completeTask={this.props.completeTask}/>
+    completeTask={this.props.completeTask}
+    categoryFilter={this.props.categoryFilter}/>
     )
   }
 

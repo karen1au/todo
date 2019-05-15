@@ -4,6 +4,7 @@ import NewTodo from './components/NewTodo.js';
 import TodoList from './components/TodoList';
 import NewCategory from './components/NewCategory';
 import Filter from './components/Filter'
+import { Segment, Header } from 'semantic-ui-react'
 
 const todos_sample = [
   {
@@ -33,13 +34,14 @@ class App extends Component {
       catFilter: "",
       filter: "all",
       filtered: todos_sample,
-      second_filter: todos_sample
+      second_filter: todos_sample,
+      form: false
     }
   }
 
   addTodo = newTodo => {
     let newList = this.state.todos;
-    newList.push(newTodo);
+    newList.unshift(newTodo);
     this.setState({todos: newList})
   }
 
@@ -94,13 +96,21 @@ class App extends Component {
       }
   }
 
+  openForm = () => {
+    this.setState({form: !this.state.form})
+  }
+
 
 
   render() {
     return (
       <div className="App">
+        <h1 onClick={this.openForm}>Do-Do-This</h1>
+      {this.state.form &&
+      <Segment compact raised padded textAlign="center" style={{margin: "2vw auto"}}>        
         <NewTodo addTodo={this.addTodo} categories={this.state.categories}/>
         <NewCategory addCategory={this.addCategory} />
+      </Segment>}
         <Filter selectFilter={this.selectFilter} 
           categories={this.state.categories}
           categoryFilter={this.categoryFilter}/>
@@ -108,7 +118,8 @@ class App extends Component {
           deleteTodo={this.deleteTodo} 
           categories={this.state.categories}
           completeTask={this.completeTask}
-          saveTodo={this.saveTodo}/>
+          saveTodo={this.saveTodo}
+          categoryFilter={this.categoryFilter}/>
       </div>
     );
   }

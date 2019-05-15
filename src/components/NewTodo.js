@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { Form, Button } from 'semantic-ui-react'
 
 
 class NewTodo extends Component {
@@ -39,26 +40,28 @@ class NewTodo extends Component {
       return;
     }
   }
+  
 
   render() {
     return (
       <div className="todo-form">
-        <h2>To do list</h2>
-        <form className="todo-input" onSubmit={() => this.handleSubmit()}>
-          <input type="text" name="title" placeholder="i need to..." value={this.state.title} onChange={this.handleChange}/>
-          <input type="text" name="desc" placeholder="details..." value={this.state.desc}  onChange={this.handleChange}/>
+        <Form onSubmit={() => this.handleSubmit()}>
+          <input className="todo-input" type="text" name="title" placeholder="i need to..." value={this.state.title} onChange={this.handleChange}/>
+          <input className="todo-input" type="text" name="desc" placeholder="details..." value={this.state.desc}  onChange={this.handleChange}/>
+          <Form.Group widths="equal">
           <select name="category" onChange={this.handleChange}>
-            <option hidden selected value> -- select a category -- </option>
+            <option hidden selected value>select a category</option>
             {this.props.categories.map(cat => {
               return <option key={cat} value={cat} >{cat}</option>
             })}
           </select>
-          <DatePicker
-            selected={this.state.due}
-            onChange={this.handleDate}
-          />
-          <input type="submit" name="submit-todo-form"/>
-        </form>
+            <DatePicker className="todo-input"
+              selected={this.state.due}
+              onChange={this.handleDate}
+            />
+          </Form.Group>
+          <Button fluid basic type="submit" className="submit-btn">Add</Button>
+        </Form>
       </div>
     );
   }

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Moment from 'react-moment';
 import DatePicker from "react-datepicker";
+import { Icon, Label } from 'semantic-ui-react';
 import "react-datepicker/dist/react-datepicker.css";
 
 class TodoItem extends Component {
@@ -56,31 +57,34 @@ class TodoItem extends Component {
   render() {
 
     return (
-              <div>
+              <div className="todo-item">
               { (!this.state.editing) ? 
                 <div key={this.props.id}>
-                  <h3><a style={{color: this.props.completed? "green": "red"}} name={this.props.id} onClick={(e) => this.props.completeTask(e)}>{this.props.title}</a></h3>
+                  <div className="item-content">
+                  <button className="edit-btn" onClick={() => this.props.deleteTodo(this.props.id)}><Icon name='delete'/></button>
+                  <button className="edit-btn" onClick={() => this.editTodo()}><Icon name='edit'/></button>
+                  <a style={{textDecoration: this.props.completed? "line-through": "none"}} name={this.props.id} onClick={(e) => this.props.completeTask(e)}>{this.props.title}</a>
                   <p>{this.props.desc}</p>
-                  <p>{this.props.category}</p>
-                  <p>due on: <Moment format="YYYY/MM/DD">{this.props.due}</Moment></p>
+                  {/* <p>due on: <Moment format="YYYY/MM/DD">{this.props.due}</Moment></p> */}
                   <p><Moment diff={<Moment>{Date.now()}</Moment>} unit="days">{this.props.due}</Moment> days left</p>
-                  <button onClick={() => this.editTodo()}>edit</button><button onClick={() => this.props.deleteTodo(this.props.id)}>delete</button>
+                  { (this.props.category) ? <Label size="small" content={this.props.category} onClick={()=> this.props.categoryFilter(this.props.category)}/> : null }
+                  </div>
                 </div>
               : <form key={this.props.id} name={this.props.id} onSubmit={() => this.handleSubmit(event)}>
-                  <input type="text" name="title" defaultValue={this.props.title} onChange={this.handleChange}/>
-                  <input type="text" name="desc" defaultValue={this.props.desc} onChange={this.handleChange}/>
-                  <select name="category" onChange={this.handleChange}>
-                    <option hidden disabled selected value> -- select a category -- </option>
+              <button className="edit-btn" onClick={this.cancelEdit}><Icon name='close'/></button>
+              <button className="edit-btn" type="submit" name="submit-form"><Icon name='save outline'/></button>
+                  <input id="edit-title" type="text" name="title" defaultValue={this.props.title} onChange={this.handleChange}/>
+                  <input id="edit-desc" type="text" name="desc" defaultValue={this.props.desc} onChange={this.handleChange}/>
+                  <DatePicker id="edit-due"
+                    selected={this.state.due}
+                    onChange={this.handleDate}
+                  />
+                  <select id="edit-cat" name="category" onChange={this.handleChange}>
+                    <option hidden disabled selected value>select a category</option>
                     {this.props.categories.map(cat => {
                       return <option key={cat} value={cat} >{cat}</option>
                     })}
                   </select>
-                  <DatePicker
-                    selected={this.state.due}
-                    onChange={this.handleDate}
-                  />
-                  <input type="submit" name="submit-form"/>
-                  <button onClick={this.cancelEdit}>cancel</button>
                 </form>
               } 
               </div>
