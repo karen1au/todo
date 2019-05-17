@@ -60,7 +60,6 @@ class TodoItem extends Component {
               <div className="todo-item">
               { (!this.state.editing) ? 
                 <div key={this.props.id}>
-                  <div className="item-content">
                   <button className="edit-btn" onClick={() => this.props.deleteTodo(this.props.id)}><Icon name='delete'/></button>
                   <button className="edit-btn" onClick={() => this.editTodo()}><Icon name='edit'/></button>
                   <a style={{textDecoration: this.props.completed? "line-through": "none"}} name={this.props.id} onClick={(e) => this.props.completeTask(e)}>{this.props.title}</a>
@@ -68,11 +67,10 @@ class TodoItem extends Component {
                   {/* <p>due on: <Moment format="YYYY/MM/DD">{this.props.due}</Moment></p> */}
                   <p><Moment diff={<Moment>{Date.now()}</Moment>} unit="days">{this.props.due}</Moment> days left</p>
                   { (this.props.category) ? <Label size="small" content={this.props.category} onClick={()=> this.props.categoryFilter(this.props.category)}/> : null }
-                  </div>
                 </div>
               : <form key={this.props.id} name={this.props.id} onSubmit={() => this.handleSubmit(event)}>
-              <button className="edit-btn" onClick={this.cancelEdit}><Icon name='close'/></button>
-              <button className="edit-btn" type="submit" name="submit-form"><Icon name='save outline'/></button>
+                  <button className="edit-btn" onClick={this.cancelEdit}><Icon name='close'/></button>
+                  <button className="edit-btn" type="submit" name="submit-form"><Icon name='save outline'/></button>
                   <input id="edit-title" type="text" name="title" defaultValue={this.props.title} onChange={this.handleChange}/>
                   <input id="edit-desc" type="text" name="desc" defaultValue={this.props.desc} onChange={this.handleChange}/>
                   <DatePicker id="edit-due"

@@ -24,7 +24,7 @@ class NewTodo extends Component {
   }
 
   handleDate = date => {
-    this.setState({due: date})
+    this.setState({due: date});
   }
 
   handleSubmit = () => {
@@ -47,18 +47,18 @@ class NewTodo extends Component {
       <div className="todo-form">
         <Form onSubmit={() => this.handleSubmit()}>
           <input className="todo-input" type="text" name="title" placeholder="i need to..." value={this.state.title} onChange={this.handleChange}/>
-          <input className="todo-input" type="text" name="desc" placeholder="details..." value={this.state.desc}  onChange={this.handleChange}/>
+          <textarea rows="2" className="todo-input" type="text" name="desc" placeholder="details..." value={this.state.desc}  onChange={this.handleChange}/>
           <Form.Group widths="equal">
-          <select name="category" onChange={this.handleChange}>
-            <option hidden selected value>select a category</option>
-            {this.props.categories.map(cat => {
-              return <option key={cat} value={cat} >{cat}</option>
-            })}
-          </select>
-            <DatePicker className="todo-input"
-              selected={this.state.due}
-              onChange={this.handleDate}
-            />
+            <select name="category" onChange={this.handleChange}>
+              <option hidden selected value>select a category</option>
+              {this.props.categories.map(cat => {
+                return <option key={cat} value={cat} >{cat}</option>
+              })}
+            </select>
+              <DatePicker className="todo-input"
+                selected={this.state.due}
+                onChange={this.handleDate}
+              />
           </Form.Group>
           <Button fluid basic type="submit" className="submit-btn">Add</Button>
         </Form>

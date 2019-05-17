@@ -5,8 +5,6 @@
 
 body {
   text-align: center;
-  /* background-image: url(https://designrshub-designrshub.netdna-ssl.com/wp-content/uploads/2012/08/10_lined_paper_texture.jpg);
-  background-repeat: repeat; */
   background: linear-gradient(241deg, #208399, #895584);
   background-size: 400% 400%;
   
@@ -95,6 +93,7 @@ h1:hover {
 .or {
   margin-left: .5em;
   color: white;
+  opacity: 0.8;
 }
 
 .todolists {
@@ -116,6 +115,14 @@ h1:hover {
   font-weight: 600;
   display: inline;
   color: white;
+}
+
+.todo-item p {
+  margin: 0.5em 0 0.5em 0;
+  max-height: 60px;
+  display : block; 
+  overflow-wrap: break-word; 
+  max-width : 100%;
 }
 
 .edit-btn {
@@ -152,8 +159,6 @@ h1:hover {
 }
 
 #edit-cat {
-  /* margin: 0 1em; */
-  /* height: 2.2em; */
   border: 1px solid white;
   background-color: rgba(255, 0, 0, 0);
   color: white;
@@ -163,7 +168,6 @@ h1:hover {
 
 #edit-due {
   margin-bottom: .5em;
-  /* height: 2.2em; */
   border-top: none;
   border-left: none;
   border-right: none;
